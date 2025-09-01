@@ -1,0 +1,4 @@
+build/*
+out/*
+build.ninja
+vendor/__pycache__/*
