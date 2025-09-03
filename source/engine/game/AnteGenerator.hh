@@ -8,9 +8,11 @@
 #include <optional>
 #include <unordered_map>
 
+class Game;
+
 struct Blind {
     f64 chipRequirement;
-    std::optional<TagContext> tagCtx;
+    std::optional<std::shared_ptr<TagBase>> tag;
     std::optional<BossContext> bossCtx;
 };
 
@@ -25,10 +27,11 @@ public:
     AnteGenerator();
     ~AnteGenerator() = default;
 
-    std::unique_ptr<Ante> generate(State &roundStartParams, Random &prng);
+    std::unique_ptr<Ante> generate(Game &game);
 
 private:
-    BossContext nextBoss(State &roundStartParams, Random &prng);
+    BossContext nextBoss(Game &game);
+    std::shared_ptr<TagBase> nextTag(Game &game);
 
     std::unordered_map<const char *, u64> m_bossesUsed;
 };

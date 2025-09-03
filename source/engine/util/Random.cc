@@ -13,7 +13,7 @@
 Random::Random(const std::string &seed)
     : m_seed(seed), m_pseudoHash(pseudoHash(seed)), m_rngStates({}) {}
 
-f64 Random::pseudoHash(const std::string &seed) {
+f64 Random::pseudoHash(const std::string &seed) const {
     constexpr f64 HASH_NUMERATOR = 1.1239285023;
 
     f64 output = 1.0;

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "engine/common/Common.hh"
+#include "engine/game/tag/TagInclude.hh"
 
 #include <unordered_map>
+#include <memory>
 
 struct BossContext {
     const char *display;
@@ -65,7 +67,28 @@ const State G_STARTPARAMS = {
         1  // ante
 };
 
-// TO DO: IMPLEMENT
-struct TagContext {};
-
-// Tag unordered_map here
+const std::unordered_map<const char *, std::shared_ptr<TagBase>> G_TAGS = {
+    {"tag_uncommon", std::make_shared<TagUncommon>()},
+    {"tag_rare", std::make_shared<TagRare>()},
+    {"tag_negative", std::make_shared<TagNegative>()},
+    {"tag_foil", std::make_shared<TagFoil>()},
+    {"tag_holo", std::make_shared<TagHolo>()},
+    {"tag_polychrome", std::make_shared<TagPolychrome>()},
+    {"tag_investment", std::make_shared<TagInvestment>()},
+    {"tag_voucher", std::make_shared<TagVoucher>()},
+    {"tag_boss", std::make_shared<TagBoss>()},
+    {"tag_standard", std::make_shared<TagStandard>()},
+    {"tag_charm", std::make_shared<TagCharm>()},
+    {"tag_meteor", std::make_shared<TagMeteor>()},
+    {"tag_buffoon", std::make_shared<TagBuffoon>()},
+    {"tag_handy", std::make_shared<TagHandy>()},
+    {"tag_garbage", std::make_shared<TagGarbage>()},
+    {"tag_ethereal", std::make_shared<TagEthereal>()},
+    {"tag_coupon", std::make_shared<TagCoupon>()},
+    {"tag_double", std::make_shared<TagDouble>()},
+    {"tag_juggle", std::make_shared<TagJuggle>()},
+    {"tag_d_six", std::make_shared<TagD6>()},
+    {"tag_top_up", std::make_shared<TagTopUp>()},
+    {"tag_skip", std::make_shared<TagSkip>()},
+    {"tag_orbital", std::make_shared<TagOrbital>()},
+    {"tag_economy", std::make_shared<TagEconomy>()}};

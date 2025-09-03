@@ -11,21 +11,16 @@
 #include <unordered_map>
 #include <vector>
 
-template <typename T>
-concept HasSortId = requires(T t) {
-    { t.sortId } -> std::integral;
-};
-
 class Random {
 public:
     Random(const std::string &seed);
     ~Random() = default;
 
-    f64 pseudoHash(const std::string &seed);
+    f64 pseudoHash(const std::string &seed) const;
     f64 pseudoSeed(const std::string &key, const std::optional<std::string> &predictSeed);
 
     template <typename K, typename V>
-    std::pair<K, V> pseudoRandomElement(const std::unordered_map<K, V> &table, f64 seed) {
+    std::pair<K, V> pseudoRandomElement(const std::unordered_map<K, V> &table, f64 seed) const {
         const size_t elementCount = table.size();
 
         std::vector<std::pair<K, V>> sortedTable;
@@ -34,9 +29,9 @@ public:
             sortedTable.push_back(pair);
         }
 
-        if constexpr (HasSortId<V>) {
+        if constexpr (requires(V v) { v->getSortId(); }) {
             std::sort(sortedTable.begin(), sortedTable.end(),
-                    [](const auto &a, const auto &b) { return a.second.sortId < b.second.sortId; });
+                    [](const auto &a, const auto &b) { return a.second->getSortId() < b.second->getSortId(); });
         } else {
             std::sort(sortedTable.begin(), sortedTable.end(),
                     [](const auto &a, const auto &b) { return std::strcmp(a.first, b.first) < 0; });
