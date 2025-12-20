@@ -32,12 +32,9 @@ n.newline()
 
 # Flags
 common_ccflags = [
-    '-DREVOLUTION',
     '-fno-asynchronous-unwind-tables',
     '-fno-exceptions',
     '-fshort-wchar',
-    '-fstack-protector-strong',
-    '-isystem', 'include',
     '-isystem', 'source',
     '-Wall',
     '-Werror',
