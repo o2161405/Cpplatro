@@ -3,8 +3,8 @@
 #include "common/Common.hh"
 #include "common/Globals.hh"
 #include "game/Game.hh"
-#include "util/Random.hh"
-#include "util/TempRandom.hh"
+#include "game/random/Random.hh"
+#include "game/random/TempRandom.hh"
 
 #include <limits>
 #include <memory>
@@ -17,9 +17,9 @@ std::unique_ptr<Ante> AnteGenerator::generate(Game &game) {
     std::unique_ptr<Ante> ante = std::make_unique<Ante>();
     Random &prng = game.getPrng();
 
-    ante->small = {this->nextTag(state.ante, prng), std::nullopt};
-    ante->big = {this->nextTag(state.ante, prng), std::nullopt};
-    ante->boss = {std::nullopt, this->nextBoss(state.ante, prng)};
+    ante->small = {this->nextTag(state.ante, prng), std::nullopt, false};
+    ante->big = {this->nextTag(state.ante, prng), std::nullopt, false};
+    ante->boss = {std::nullopt, this->nextBoss(state.ante, prng), false};
 
     return ante;
 }

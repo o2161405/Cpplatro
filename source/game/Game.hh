@@ -2,8 +2,8 @@
 
 #include "common/Common.hh"
 #include "common/Globals.hh"
-#include "game/AnteGenerator.hh"
-#include "util/Random.hh"
+#include "game/generators/AnteGenerator.hh"
+#include "game/random/Random.hh"
 
 #include <string>
 

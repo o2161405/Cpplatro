@@ -2,7 +2,7 @@
 
 #include "common/Common.hh"
 #include "common/Globals.hh"
-#include "util/Random.hh"
+#include "game/random/Random.hh"
 
 #include <array>
 #include <functional>
@@ -14,6 +14,7 @@ class Game;
 struct Blind {
     std::optional<std::reference_wrapper<const TagBase>> tag;
     std::optional<std::reference_wrapper<const BossBase>> boss;
+    bool completed;
 };
 
 struct Ante {
