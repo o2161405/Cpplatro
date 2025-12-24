@@ -9,8 +9,6 @@
 #include <memory>
 #include <optional>
 
-class Game;
-
 struct Blind {
     std::optional<std::reference_wrapper<const TagBase>> tag;
     std::optional<std::reference_wrapper<const BossBase>> boss;
@@ -28,7 +26,7 @@ public:
     AnteGenerator() = default;
     ~AnteGenerator() = default;
 
-    std::unique_ptr<Ante> generate(Game &game);
+    Ante generate(const s8 ante, Random &prng);
 
 private:
     std::reference_wrapper<const BossBase> nextBoss(const s8 ante, Random &prng);

@@ -5,15 +5,12 @@
 #include <cmath>
 #include <cstdint>
 
-#include <bit>
-
 class TempRandom {
 public:
     TempRandom(const f64 &seed);
 
     f64 getDouble() {
-        u64 intermediate = (next() & 0x000fffffffffffffULL) | 0x3ff0000000000000ULL;
-        return std::bit_cast<f64>(intermediate) - 1.0;
+        return (next() & (-1ULL >> 12)) * 0x1p-52;
     }
 
     u64 getInteger(u64 max) {

@@ -4,6 +4,7 @@
 
 #include <cmath>
 
+#include <numbers>
 #include <string>
 
 Random::Random(const std::string &seed)

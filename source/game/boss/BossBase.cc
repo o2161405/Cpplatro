@@ -1,5 +1,7 @@
 #include "BossBase.hh"
 
+#include <algorithm>
+
 bool BossBase::isEligible(const s8 &ante) const {
     constexpr u8 WIN_ANTE = 8;
     const u8 effectiveAnte = std::max(static_cast<s8>(1), ante);
