@@ -5,7 +5,6 @@
 #include <optional>
 #include <string_view>
 
-class Game;
 struct State;
 
 class TagBase {

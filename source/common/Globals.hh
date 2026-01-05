@@ -7,6 +7,28 @@
 #include <array>
 #include <memory>
 
+struct State {
+    s8 dollars;
+    u8 handSize;
+    u8 discards;
+    u8 hands;
+    u8 rerollCost;
+    u8 jokerSlots;
+    u8 consumableSlots;
+    s8 ante;
+};
+
+const State G_STARTPARAMS = {
+        4, // dollars
+        8, // handSize
+        3, // discards
+        4, // hands
+        5, // rerollCost
+        5, // jokerSlots
+        2, // consumableSlots
+        1  // ante
+};
+
 const std::array<std::unique_ptr<const BossBase>, 28> G_BOSSBLINDS = {{
         std::make_unique<BossArm>(),
         std::make_unique<BossClub>(),
@@ -37,28 +59,6 @@ const std::array<std::unique_ptr<const BossBase>, 28> G_BOSSBLINDS = {{
         std::make_unique<BossWheel>(),
         std::make_unique<BossWindow>(),
 }};
-
-struct State {
-    s8 dollars;
-    u8 handSize;
-    u8 discards;
-    u8 hands;
-    u8 rerollCost;
-    u8 jokerSlots;
-    u8 consumableSlots;
-    s8 ante;
-};
-
-const State G_STARTPARAMS = {
-        4, // dollars
-        8, // handSize
-        3, // discards
-        4, // hands
-        5, // rerollCost
-        5, // jokerSlots
-        2, // consumableSlots
-        1  // ante
-};
 
 const std::array<std::unique_ptr<TagBase>, 24> G_TAGS = {{
         std::make_unique<TagUncommon>(),

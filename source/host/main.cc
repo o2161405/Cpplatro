@@ -1,6 +1,9 @@
 #include "game/Game.hh"
+#include "game/ui/UICommandLine.hh"
 
 #include <cstring>
+
+#include <string>
 
 int main(int argc, char *argv[]) {
     std::string seed;
@@ -11,7 +14,8 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    Game game(seed);
+    UICommandLine ui;
+    Game game(seed, ui);
 
     return 0;
 }

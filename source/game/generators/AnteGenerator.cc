@@ -1,27 +1,18 @@
 #include "AnteGenerator.hh"
 
-#include "common/Common.hh"
-#include "common/Globals.hh"
-#include "game/Game.hh"
-#include "util/Random.hh"
-#include "util/TempRandom.hh"
+#include "game/random/TempRandom.hh"
 
 #include <limits>
 #include <memory>
 #include <optional>
 #include <vector>
 
-std::unique_ptr<Ante> AnteGenerator::generate(Game &game) {
-    const State &state = game.getState();
-
-    std::unique_ptr<Ante> ante = std::make_unique<Ante>();
-    Random &prng = game.getPrng();
-
-    ante->small = {this->nextTag(state.ante, prng), std::nullopt};
-    ante->big = {this->nextTag(state.ante, prng), std::nullopt};
-    ante->boss = {std::nullopt, this->nextBoss(state.ante, prng)};
-
-    return ante;
+Ante AnteGenerator::generate(const s8 ante, Random &prng) {
+    Ante generated;
+    generated.small = {this->nextTag(ante, prng), std::nullopt, false};
+    generated.big = {this->nextTag(ante, prng), std::nullopt, false};
+    generated.boss = {std::nullopt, this->nextBoss(ante, prng), false};
+    return generated;
 }
 
 std::reference_wrapper<const BossBase> AnteGenerator::nextBoss(const s8 ante, Random &prng) {
@@ -29,9 +20,7 @@ std::reference_wrapper<const BossBase> AnteGenerator::nextBoss(const s8 ante, Ra
     std::vector<u32> eligibleBossIndices;
 
     for (u32 i = 0; i < G_BOSSBLINDS.size(); ++i) {
-        const BossBase &boss = *G_BOSSBLINDS[i];
-
-        if (!boss.isEligible(ante)) {
+        if (!G_BOSSBLINDS[i]->isEligible(ante)) {
             continue;
         }
 
