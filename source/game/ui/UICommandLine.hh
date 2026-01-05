@@ -11,10 +11,10 @@
 namespace UIHelpers {
 
 inline std::string getDisplay(const UIChoice::Any &selection) {
-    return std::visit(
+    return std::visit<std::string>(
             overloaded{
                     [](const UIChoice::BlindSelection &s) {
-                        return std::string(std::visit(
+                        return std::visit<std::string>(
                                 overloaded{[](UIChoice::BlindSelection::Small s) {
                                                return (s == UIChoice::BlindSelection::Small::Pick) ?
                                                        "Pick Small Blind" :
@@ -28,7 +28,7 @@ inline std::string getDisplay(const UIChoice::Any &selection) {
                                         [](UIChoice::BlindSelection::Boss) {
                                             return "Pick Boss Blind";
                                         }},
-                                s.selection));
+                                s.selection);
                     },
                     [](const UIChoice::ShopSelection &) { return std::string("Shop Selection"); },
                     [](const UIChoice::CardSelection &) { return std::string("Card Selection"); },
@@ -36,7 +36,8 @@ inline std::string getDisplay(const UIChoice::Any &selection) {
                         // when joker inventory and other stuff gets implemented, this needs to
                         // be another std::visit with all the Action variants
                         return std::string("Some other action");
-                    }},
+                    },
+            },
             selection);
 }
 
@@ -45,21 +46,22 @@ inline std::string getDisplay(const UIChoice::Any &selection) {
 class UICommandLine : public UIBase {
 public:
     UIChoice::Action<UIChoice::BlindSelection> getBlindAction(const Ante &ante) override {
-        std::print("Blinds:\n  Small: {}\n  Big: {}\n  Boss: {}\n\n",
-                ante.small.tag.value().get().getDisplay(), ante.big.tag.value().get().getDisplay(),
-                ante.boss.boss.value().get().getDisplay());
+        std::println("Blinds:");
+        std::println("\tSmall: {}", ante.small.tag.value().get().getDisplay());
+        std::println("\tBig: {}", ante.big.tag.value().get().getDisplay());
+        std::println("\tBoss: {}", ante.boss.boss.value().get().getDisplay());
 
         // Needs to be UIChoice::Action<UIChoice::BlindSelection> when management cases are added
         std::vector<UIChoice::BlindSelection> choices = UIHelpers::getBlindChoices(ante);
 
-        std::print("Available Choices:\n");
-        for (auto [i, choice] : std::views::enumerate(choices)) {
-            std::print("  {}: {}\n", i, UIHelpers::getDisplay(choice));
-        }
-
         // Management cases get added here
 
-        int selection;
+        std::println("Available Choices:");
+        for (auto [i, choice] : std::views::enumerate(choices)) {
+            std::println("\t{}: {}", i, UIHelpers::getDisplay(choice));
+        }
+
+        u32 selection;
         while (true) {
             std::print("Enter choice: ");
 
