@@ -13,9 +13,9 @@ void Game::run() {
     // while (m_state.ante != WIN_ANTE) {
 
     m_currentAnte = m_anteGenerator.generate(m_state.ante, m_prng);
-    
+
     UIChoice::Action<UIChoice::BlindSelection> action = m_ui.getBlindAction(m_currentAnte);
-    
+
     std::visit(overloaded{[&](const UIChoice::BlindSelection &) {
                               std::println("Blind selection chosen\n");
                           },
